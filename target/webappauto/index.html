@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>AUTOMATE CE REVIEW</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="container-fluid">
+    <div class="card" style="width: 600px; margin: auto; margin-top: 50px">
+        <h2 class="bg-info text-light card-header">Automate CE Review</h2>
+        <form class="form" action="clearingReview" method="post">
+            <table class="table table-hover table-striped">
+                <tr>
+                    <td>Transaction Number</td>
+                    <td><input type="text" name="transactionNumber"></td>
+                </tr>  
+                <tr>
+                    <td>Role</td>
+                    <td><input type="radio" name="role" value="l1"> l1
+                        <input type="radio" name="role" value="l2"> l2</td>
+                </tr>
+                <tr>
+                    <td><button type="submit" class="btn btn-outline-success">Submit</button></td>
+                    <td><button type="reset" class="btn btn-outline-danger">Reset</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

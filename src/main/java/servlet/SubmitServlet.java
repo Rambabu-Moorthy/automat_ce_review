@@ -7,10 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -29,8 +28,8 @@ public class SubmitServlet extends HttpServlet{
 		String transactionNumber = req.getParameter("transactionNumber");
         String selectedRole = req.getParameter("role");
          
-        // Launching chrome and passing ce review system URL and Login
-     /*   WebDriverManager.chromedriver().setup();
+    /*  // Launching chrome and passing ce review system URL and Login
+        WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://trpps.cbwmoney.com/CEREVIEW/#/login");
@@ -98,22 +97,38 @@ public class SubmitServlet extends HttpServlet{
     	} 
             
         //cilck on the MATCHED SCENARIOS checkbox
+        try {
         driver.findElement(By.xpath("//*[@id='Matched-Scenarios']/fieldset/button/i")).click();
         System.out.println("MATCHED SCENARIOS checkbox clicked");
-            
+        } catch (NoSuchElementException e) {
+            System.out.println("Matched Scenarios button not found. Skipping...");
+        }
+           
+        try {
         //click on the MATCHED TOKENS checkbox
         driver.findElement(By.xpath("//*[@id='Matched-Tokens']/fieldset/button/i")).click();
         System.out.println("MATCHED TOKENS checkbox clicked");
+        } catch (NoSuchElementException e) {
+            System.out.println("Matched Tokens button not found. Skipping...");
+        }
 
+        try {
         //click on the MONITORED SIGNALS checkbox
         driver.findElement(By.xpath("//*[@id='Monitored-Signals']/fieldset/button")).click(); 
         System.out.println("MONITORED SIGNALS checkbox clicked");
-            
+        } catch (NoSuchElementException e) {
+            System.out.println("MONITORED SIGNALS button not found. Skipping...");
+        }
+           
+        try {
         //click on the PARTICIPANT SENDER checkbox
         WebElement participantSenderCheckbox = driver.findElement(By.xpath("//*[@id='Participants']/fieldset/div[1]/div/div[1]/button/i"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", participantSenderCheckbox);
         participantSenderCheckbox.click();
         System.out.println("PARTICIPANT SENDER checkbox clicked");
+        } catch (NoSuchElementException e) {
+            System.out.println("PARTICIPANT SENDER button not found. Skipping...");
+        }
            
          try {
     	 Thread.sleep(2000);
@@ -122,17 +137,26 @@ public class SubmitServlet extends HttpServlet{
     	 e.printStackTrace();
     	 } 
             
+         try {
          //click on the PARTICIPANT RECEIVER checkbox
          WebElement participantReceiverCheckbox = driver.findElement(By.xpath("//*[@id='Participants']/fieldset/div[2]/div/div[1]/button"));
          ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", participantReceiverCheckbox);
          participantReceiverCheckbox.click(); 
          System.out.println("PARTICIPANT RECEIVER checkbox clicked");
+         } catch (NoSuchElementException e) {
+             System.out.println("PARTICIPANT RECEIVER button not found. Skipping...");
+         }
             
+         try {
          //click on the ROUTE STATISTICS checkbox
          WebElement routeStatisticsCheckbox = driver.findElement(By.xpath("//*[@id='Route-Statistics']/fieldset/div[1]/div[1]/h1/button/i"));
          ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", routeStatisticsCheckbox);
          routeStatisticsCheckbox.click();
          System.out.println("ROUTE STATISTICS checkbox clicked");
+         } catch (NoSuchElementException e) {
+             System.out.println("ROUTE STATISTICS button not found. Skipping...");
+         }
+         
           try {
     	  Thread.sleep(1000);
     	  } catch (InterruptedException e) {
@@ -140,7 +164,7 @@ public class SubmitServlet extends HttpServlet{
     	  e.printStackTrace();
     	  } 
             
-          // scroll down until PAYMENT PURPOSE section visible
+          // scroll down until TRANSACTION PAYMENT PURPOSE section visible
           WebElement paymentPurposeDropdown = driver.findElement(By.xpath("//*[@id='paymentPurpose']"));
           ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", paymentPurposeDropdown); 
             
@@ -177,9 +201,13 @@ public class SubmitServlet extends HttpServlet{
     	  e.printStackTrace();
     	  }
             
+          try {
           //click on the EVIDENCE checkbox
           driver.findElement(By.xpath("//*[@id='Evidence']/fieldset/button/i")).click(); 
           System.out.println("EVIDENCE checkbox clicked");
+          } catch (NoSuchElementException e) {
+              System.out.println("EVIDENCE checkbox button not found. Skipping...");
+          }
             
           //click on the NO NEGATIVE REVIEW button
           driver.findElement(By.xpath("//*[@id='Negative-News-Observations']/fieldset/div[2]/button[1]")).click();

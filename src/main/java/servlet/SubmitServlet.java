@@ -57,8 +57,16 @@ public class SubmitServlet extends HttpServlet{
 		}
         
         //clicking the SEARCH FILTER in the home page of ce review system
+        if(selectedRole.equals("l1")) {
         driver.findElement(By.xpath("/html/body/app/div/div/customertransaction-list/div[1]/ul/li[7]/a[2]")).click();
-        System.out.println("SEARCH FILTER clicked");
+        System.out.println("SEARCH FILTER clicked by l1 user");
+        } 
+        else
+        {
+        	driver.findElement(By.xpath("/html/body/app/div/div/customertransaction-list/div[1]/ul/li[8]/a[2]")).click();
+            System.out.println("SEARCH FILTER clicked by l2 user");
+        }
+       
         try {
         Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -223,7 +231,10 @@ public class SubmitServlet extends HttpServlet{
     	  // TODO Auto-generated catch block
     	  e.printStackTrace();
     	  }
-            
+          
+          // if l1 user reviewing the transaction then reason code selection, decision selection & remarks entering will happen
+          // else l2 user reviewing the transaction then skip the reason code selection, decision selection only remarks entering will happen
+          if(selectedRole.equals("l1")) {
           //Click on the REASON CODES dropdown 
           driver.findElement(By.xpath("//*[@id='applicableUnblockingCodes']/div/div[1]/span")).click();
           System.out.println("REASON CODES dropdown clicked");
@@ -243,7 +254,10 @@ public class SubmitServlet extends HttpServlet{
           
           // entering remarks for releasing the transaction
           driver.findElement(By.id("remarks")).sendKeys("No suspicious found - Release");
-          System.out.println("remarks entered");
+          System.out.println("remarks entered"); } else {
+        	  driver.findElement(By.xpath("//*[@id='Decision']/fieldset/div[3]/div[2]/textarea")).sendKeys("Released with Reiew");
+        	  System.out.println("remarks added by l2 user");
+          }
             
           // clicking SUBMIT button
           finalSubmit.click(); 

@@ -64,12 +64,21 @@
     <version>20201115</version> <!-- or the latest version available -->
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+<dependency>
+    <groupId>org.testng</groupId>
+    <artifactId>testng</artifactId>
+    <version>7.10.2</version>
+</dependency>
+
   </dependencies>
 
   <build>
     <finalName>webappauto</finalName>
+    
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+		
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
@@ -101,5 +110,6 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
   </build>
 </project>

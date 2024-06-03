@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "dtd/testng-1.0.dtd">
+<suite name="Suite">
+    <test name="Test">
+    <parameter name="action" value="default_action"/>
+    <parameter name="transactionNumber" value="default_transaction"/>
+        <classes>
+            <class name="automationCode.CompleteReview"/>
+        </classes>
+    </test>
+</suite>

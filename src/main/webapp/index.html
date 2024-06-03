@@ -4,42 +4,88 @@
 <meta charset="ISO-8859-1">
 <title>AUTOMATE CE REVIEW</title>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- jQuery library -->
-<script
-    src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- Popper JS -->
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 <!-- Latest compiled JavaScript -->
-<script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-
-  
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .action-label {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .action-radio {
+        display: flex;
+        align-items: center;
+    }
+</style>
 </head>
 <body class="container-fluid">
     <div class="card" style="width: 600px; margin: auto; margin-top: 50px">
-        <h2 class="bg-info text-light card-header">Automate CE Review</h2>
+        <h2 class="bg-info text-light card-header">Complete CE Review</h2>
         <form class="form" action="clearingReview" method="post">
+            <div class="form-group" style="padding: 11px; display: flex; gap: 20px; background: rgba(0,0,0,.05);">
+                <label for="transactionNumber" class="col-form-label" style="flex: 1;">
+                    Transaction Number
+                </label>
+                <input type="text" id="transactionNumber" name="transactionNumber" class="form-control" style="flex: 2;">
+            </div>
             <table class="table table-hover table-striped">
-                <tr>
-                    <td>Transaction Number</td>
-                    <td><input type="text" name="transactionNumber"></td>
-                </tr>  
-                <tr>
-                    <td>Role</td>
-                    <td><input type="radio" name="role" value="l1"> l1
-                        <input type="radio" name="role" value="l2"> l2</td>
-                </tr>
-                <tr>
-                    <td><button type="submit" class="btn btn-outline-success">Submit</button></td>
-                    <td><button type="reset" class="btn btn-outline-danger">Reset</button></td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th style="width: 80%;">Action</th>
+                        <th style="width: 20%;">Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="action-label">L1 - [ Unblock & Release ]</td>
+                        <td class="action-radio"><input type="radio" name="action" value="unblock_release_by_l1"></td>
+                    </tr>
+                    <tr>
+                        <td class="action-label">L1 & L2 - [ Unblock & Release with Review without Case Details ]</td>
+                        <td class="action-radio"><input type="radio" name="action" value="unblock_release_with_review_no_case_details_by_l1_l2"></td>
+                    </tr>
+                    <tr>
+                        <td class="action-label">L1 & L2 - [ Unblock & Release with Review by adding Case Details ]</td>
+                        <td class="action-radio"><input type="radio" name="action" value="unblock_release_with_review_add_case_details_by_l1_l2"></td>
+                    </tr>
+                    <tr>
+                        <td class="action-label">L1 - [ Hold ]</td>
+                        <td class="action-radio"><input type="radio" name="action" value="hold_by_l1"></td>
+                    </tr>
+                    <tr>
+                        <td class="action-label">L1 - [ Block with Case Details ]</td>
+                        <td class="action-radio"><input type="radio" name="action" value="block_with_case_details_by_l1"></td>
+                    </tr>
+                    <tr>
+                        <td class="action-label">L1 - [ Block without Case Details ]</td>
+                        <td class="action-radio"><input type="radio" name="action" value="block_without_case_details_by_l1"></td>
+                    </tr>
+                    <tr>
+                        <td class="action-label">L1 & L2 - [ Block with Review without Case Details ]</td>
+                        <td class="action-radio"><input type="radio" name="action" value="block_with_review_no_case_details_l1_l2"></td>
+                    </tr>
+                    <tr>
+                        <td class="action-label">L1 & L2 - [ Block with Review by adding Case Details ]</td>
+                        <td class="action-radio"><input type="radio" name="action" value="block_with_review_with_case_details_l1_l2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <button type="submit" class="btn btn-outline-success">Submit</button>
+                            <button type="reset" class="btn btn-outline-danger">Reset</button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </form>
     </div>

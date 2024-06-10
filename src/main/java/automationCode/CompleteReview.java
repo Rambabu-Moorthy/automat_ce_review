@@ -8,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,22 +16,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class CompleteReview {
 	
 	private WebDriver driver;
-
-	 @BeforeClass
-	    public void setUp() {
-	        WebDriverManager.chromedriver().setup();
-	        ChromeOptions options = new ChromeOptions();
-	        options.addArguments("--headless");
-	        driver = new ChromeDriver(options);
-//	        driver = new ChromeDriver();
-	        driver.manage().window().maximize();
-	        System.out.println("chrome launched successfully");
-	        driver.get("https://trpps.cbwmoney.com/CEREVIEW/#/login");
-	        System.out.println("CE REVIEW launched successfully");
-	    }
 	 
-	 public void launchChromeAgain() throws InterruptedException {
-		 //Thread.sleep(2000);
+	 public void launchChromePassUrl() throws InterruptedException {
+//          Thread.sleep(2000);
 		    WebDriverManager.chromedriver().setup();
 	        ChromeOptions options = new ChromeOptions();
 	        options.addArguments("--headless");
@@ -58,7 +44,7 @@ public class CompleteReview {
 	        System.out.println("Login successful by L1");
 	    }
 	 
-	 //Web element-searchFilter for l1 and l2 user changes, so two different methods
+	 //Web element-searchFilter changes for l1 and l2 user so two different methods
 	 private void searchFilterClickL1() throws InterruptedException {
 		    Thread.sleep(2000);
 		    //l1 user searchFilter
@@ -214,13 +200,13 @@ public class CompleteReview {
          
          if(action.equals("block_with_case_details_by_l1")||action.equals("block_without_case_details_by_l1")) {
         	 
-        	 Thread.sleep(1000);
-             //selecting the SELECT DECISION dropdown and choose BLOCK
-             new Select(driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[2]/div/select"))).selectByIndex(1);
-             System.out.println("SELECT DECISION dropdown clicked and chose BLOCK"); 
+         Thread.sleep(1000);
+       //selecting the SELECT DECISION dropdown and choose BLOCK
+         new Select(driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[2]/div/select"))).selectByIndex(1);
+         System.out.println("SELECT DECISION dropdown clicked and chose BLOCK"); 
              
-             // entering remarks for blocking the transaction
-             driver.findElement(By.id("remarks")).sendKeys("suspicious found - Release by l1");
+      // entering remarks for blocking the transaction
+         driver.findElement(By.id("remarks")).sendKeys("suspicious found - BLOCK by l1");
              System.out.println("remarks entered"); 
              } else if(action.equals("block_with_review_no_case_details_l1_l2")|| action.equals("block_with_review_with_case_details_l1_l2")) {
             	  new Select(driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[2]/div/select"))).selectByIndex(2);
@@ -239,11 +225,8 @@ public class CompleteReview {
                   
                  Thread.sleep(1000);
                // entering remarks for moving it to L2 review
-                  driver.findElement(By.id("remarks")).sendKeys("Need L2 review then Release");
+                  driver.findElement(By.id("remarks")).sendKeys("Need L2 review then block");
                   System.out.println("remarks entered");
-                  
-//                  finalSubmit.click(); 
-//                  System.out.println("final submit clicked"); 
              }
 	 }
 	 
@@ -259,55 +242,48 @@ public class CompleteReview {
          // else l2 user reviewing the transaction then only remarks entering will happen
          //Click on the REASON CODES dropdown 
          driver.findElement(By.xpath("//*[@id='applicableUnblockingCodes']/div/div[1]/span")).click();
-         System.out.println("REASON CODES dropdown clicked");
+         System.out.println("REASON CODES dropdown clicked by L1");
            
          // selectng the FIRST REASON CODE by clicking since it is a multi-select 
          WebElement noSuspious = driver.findElement(By.xpath("//*[@id='applicableUnblockingCodes']/div/div[2]/ul[2]/li[2]"));
          noSuspious.click();
-         System.out.println("FIRST REASON CODE checked");
+         System.out.println("FIRST REASON CODE checked by L1 user");
            
          // after selecting REASON CODES from the multi-select checkbox dropdown "Its a TAB out click"
          driver.findElement(By.xpath("//*[@id='applicableUnblockingCodes']/div/div[2]/ul[1]/li/input")).click();
-         System.out.println("TAB OUT done"); 
+         System.out.println("TAB OUT done yb L1 user"); 
          
          if(action.equals("unblock_release_by_l1")) {
          //selecting the SELECT DECISION dropdown and choose UNBLOCK AND RELEASE
          new Select(driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[2]/div/select"))).selectByIndex(1);
-         System.out.println("SELECT DECISION dropdown clicked and chose UNBLOCK AND RELEASE "); 
+         System.out.println("SELECT DECISION dropdown clicked and chose UNBLOCK AND RELEASE by L1 user"); 
          
          // entering remarks for releasing the transaction
          driver.findElement(By.id("remarks")).sendKeys("No suspicious found - Release by l1");
-         System.out.println("remarks entered"); 
-         
-         finalSubmit.click(); 
-         System.out.println("final submit clicked");  
+         System.out.println("remarks entered");   
          
          } else if(action.equals("unblock_release_with_review_no_case_details_by_l1_l2")) {
         	//selecting the SELECT DECISION dropdown and choose UNBLOCK AND RELEASE WITH REVIEW
         	 new Select(driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[2]/div/select"))).selectByIndex(2);
-             System.out.println("SELECT DECISION dropdown clicked and chose UNBLOCK AND RELEASE WITH REVIEW"); 
+             System.out.println("SELECT DECISION dropdown clicked and chose UNBLOCK AND RELEASE WITH REVIEW by L1 user"); 
              
              ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalSubmit); 
              Thread.sleep(1000);
+             System.out.println("Scroll down until Final Submit button visible by L1 user"); 
              
             // click SECTIONS TO REVIEW drop down 
             driver.findElement(By.xpath("//*[@id='sectionToReviewList']/div/div[1]/span")).click();
+            System.out.println("Clicking Sections to Review drop down by L1 user "); 
             
             //chose TRANSACTION_DETAILS from the multi select check box
             WebElement TRAN_DETAILS = driver.findElement(By.xpath("//*[@id='sectionToReviewList']/div/div[2]/ul[2]/li[1]/div"));
             TRAN_DETAILS.click();
-            System.out.println("FIRST REASON CODE checked");
+            System.out.println("FIRST REASON CODE checked by L1 user");
              
             Thread.sleep(1000);
           // entering remarks for moving it to L2 review
              driver.findElement(By.id("remarks")).sendKeys("Need L2 review then Release");
-             System.out.println("remarks entered");
-             
-             finalSubmit.click(); 
-             System.out.println("final submit clicked");  
-             
-     	     driver.quit();
-     	     System.out.println("closing the driver");
+             System.out.println("remarks entered by L1 user"); 
              
          } else if(action.equals("unblock_release_with_review_add_case_details_by_l1_l2")) {
         	//selecting the SELECT DECISION dropdown and choose UNBLOCK AND RELEASE WITH REVIEW
@@ -353,30 +329,56 @@ public class CompleteReview {
              
              driver.findElement(By.xpath("//*[@id='Case']/fieldset/div[3]/button")).click();
              System.out.println("submit button clicked after selecting the hold reason");
-         }
-           
-         // clicking SUBMIT button
-//         finalSubmit.click(); 
-//         System.out.println("final submit clicked");    
+             
+             driver.quit();
+             System.out.println("driver closed after move the transaction to HOLD status");
+         }  
+	 }
+	  
+	 //final submit button web element differs for L1 user & L2 user so two different methods
+	 private void clickFinalSubmitL1() throws InterruptedException {
+		     Thread.sleep(1000);
+		     WebElement finalSubmit = driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[4]/button[3]"));
+		     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalSubmit); 
+		     finalSubmit.click(); 
+	         System.out.println("final submit clicked from L1 user");  
+	         
+	         driver.quit();
+     	     System.out.println("closing the driver from l1 screen");
 	 }
 	 
-	 private void afterCaseAdedClickFinalSubmit() {
-		     WebElement finalSubmit = driver.findElement(By.xpath("//*[@id='Decision']/fieldset/div[4]/button[3]"));
+	 private void clickFinalSubmitL2(String action) throws InterruptedException {
+	     Thread.sleep(1000);
+	     if(action.equals("block_with_review_no_case_details_l1_l2")||action.equals("block_with_review_with_case_details_l1_l2")) {
+	    	 WebElement finalSubmit = driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[4]/button[2]"));
+		     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalSubmit); 
 		     finalSubmit.click(); 
-	         System.out.println("final submit clicked");  
-	 }
+	         System.out.println("final submit clicked from L2 user");  
+	     }else if(action.equals("unblock_release_by_l1")|| action.equals("unblock_release_with_review_no_case_details_by_l1_l2")||action.equals("unblock_release_with_review_add_case_details_by_l1_l2")){
+	     WebElement finalSubmit = driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[4]/button[3]"));
+	     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalSubmit); 
+	     finalSubmit.click(); 
+         System.out.println("final submit clicked from L2 user");  
+	     }
+	     
+	 //    Thread.sleep(5000);
+//	     finalSubmit.click(); 
+//         System.out.println("final submit clicked from L2 user");  
+         
+         driver.quit();
+ 	     System.out.println("closing the driver from l2 screen");
+ }
 	 
 	 private void releaseWithReviewL2() throws InterruptedException {
 		 Thread.sleep(1000);
 		 //scroll until Submit button to view
-		 WebElement finalSubmit = driver.findElement(By.xpath("//*[@id='Decision']/fieldset/div[4]/button[3]"));
+		 WebElement finalSubmit = driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[4]/button[2]"));
          ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalSubmit); 
+         System.out.println("scroll down until Submit button visible by L2 user");  
          
          //enter remarks in the text area
          driver.findElement(By.xpath("//*[@id='Decision']/fieldset/div[3]/div[2]/textarea")).sendKeys("No suspicious found - Release by l2");
-         
-         finalSubmit.click(); 
-         System.out.println("final submit clicked");
+         System.out.println("entering remarks by L2 user");  
 	 }
 	 
 	 private void blockWithReviewL2() throws InterruptedException {
@@ -388,18 +390,14 @@ public class CompleteReview {
          
          //selecting BLOCK from the decision dropdown
          new Select(driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[15]/div/fieldset/div[2]/div[1]/select"))).selectByIndex(1);
-         System.out.println("change DECISION dropdown option to BLOCK"); 
+         System.out.println("change DECISION dropdown option from BLOCK WITH REVIEW to BLOCK"); 
          
          //enter remarks in the text area
          driver.findElement(By.xpath("//*[@id='Decision']/fieldset/div[3]/div[2]/textarea")).sendKeys("suspicious found - Block by l2");
          System.out.println("remarks entered in the text area");
-         
-         //Thread.sleep(2000);
-         finalSubmit.click(); 
-         System.out.println("BLOCK and final submit clicked by L2 ");
 	 }
 	 
-	 private void logoutL1andloginL2() throws InterruptedException {
+	 private void loginL2() throws InterruptedException {
 		    Thread.sleep(1000);	
 		    // login as L2 user
 	        driver.findElement(By.id("userName")).sendKeys("l2");
@@ -412,8 +410,10 @@ public class CompleteReview {
 		 Thread.sleep(1000);
 		 driver.findElement(By.xpath("//button[text() = 'Case Details']")).click();
 		 System.out.println("case details button clicked");
+		 
 		 new Select(driver.findElement(By.xpath("//*[@id='categoryType']"))).selectByIndex(2);
 		 System.out.println("category type selected from the dropdown");
+		 
 		 Thread.sleep(1000);
 		 new Select(driver.findElement(By.xpath("//*[@id='category']"))).selectByIndex(2);
 		 System.out.println("category selected from the dropdown");
@@ -422,18 +422,14 @@ public class CompleteReview {
 		 System.out.println("checkbox for case clicked");
 		 
 		 Thread.sleep(1000);
-		// driver.findElement(By.xpath("//*[@id='Case']/fieldset/button")).click();
 	     driver.findElement(By.xpath("/html/body/app/div/div/customertransactionreview/div/div[18]/div/fieldset/button")).click();
 		 System.out.println("case submit button clicked");
-		 
-		 
-		//*[@id="Case"]/fieldset/div[3]/table/tbody/tr[2]/td/input
 	 }
 	 
 	  private void performActionBasedOnParameters(String action, String transactionNumber) throws Exception {
 	        switch (action) {
 	            case "unblock_release_by_l1":
-	                // Perform unblock_release_by_l1 action
+	            	launchChromePassUrl();
 	            	loginL1();
 	            	searchFilterClickL1();
 	            	searchByTranNum(transactionNumber);
@@ -442,10 +438,10 @@ public class CompleteReview {
 	            	checkParticipants();
 	            	tranPurposeEvidence();
 	            	decisionUnblock(action);
-	            	
+	            	clickFinalSubmitL1();
 	                break;
 	            case "unblock_release_with_review_no_case_details_by_l1_l2":
-	                // Perform unblock_release_with_review_no_case_details_by_l1_l2 action
+	            	launchChromePassUrl();
 	            	loginL1();
 	            	searchFilterClickL1();
 	            	searchByTranNum(transactionNumber);
@@ -454,18 +450,18 @@ public class CompleteReview {
 	            	checkParticipants();
 	            	tranPurposeEvidence();
 	            	decisionUnblock(action);
-	            	//logoutL1andloginL2();
-	            	launchChromeAgain();
-	            	logoutL1andloginL2();
-	            	
+	            	clickFinalSubmitL1();
+	            	launchChromePassUrl();
+	            	loginL2();
 	            	searchFilterClickL2();
 	            	searchByTranNum(transactionNumber);
 	            	reviewButtonClicked();
 	            	releaseWithReviewL2();
-	            	
+	            	clickFinalSubmitL2(action);
 	                System.out.println("Performing action: " + action);
 	                break;
 	            case "unblock_release_with_review_add_case_details_by_l1_l2":
+	            	launchChromePassUrl();
 	            	loginL1();
 	            	searchFilterClickL1();
 	            	searchByTranNum(transactionNumber);
@@ -476,16 +472,18 @@ public class CompleteReview {
 	            	decisionUnblock(action);
 	            	caseDetailsByL1();
 	            	decisionUnblock(action);
-	            	afterCaseAdedClickFinalSubmit();
-	            	launchChromeAgain();
-	            	logoutL1andloginL2();
+	            	clickFinalSubmitL1();
+	            	launchChromePassUrl();
+	            	loginL2();
 	            	searchFilterClickL2();
 	            	searchByTranNum(transactionNumber);
 	            	reviewButtonClicked();
 	            	releaseWithReviewL2();
+	            	clickFinalSubmitL2(action);
 	                System.out.println("Performing action: " + action);
 	                break;
 	            case "hold_by_l1":
+	            	launchChromePassUrl();
 	             	loginL1();
 	             	searchFilterClickL1();
 	            	searchByTranNum(transactionNumber);
@@ -497,6 +495,7 @@ public class CompleteReview {
 	                System.out.println("Performing action: " + action);
 	                break;
 	            case "block_with_case_details_by_l1":
+	            	launchChromePassUrl();
 	            	loginL1();
 	             	searchFilterClickL1();
 	            	searchByTranNum(transactionNumber);
@@ -507,10 +506,11 @@ public class CompleteReview {
 	            	decisionBlock(action);
 	            	caseDetailsByL1();
 	            	decisionBlock(action);
-	            	afterCaseAdedClickFinalSubmit();
+	            	clickFinalSubmitL1();
 	                System.out.println("Performing action: " + action);
 	                break;
 	            case "block_without_case_details_by_l1":
+	            	launchChromePassUrl();
 	            	loginL1();
 	             	searchFilterClickL1();
 	            	searchByTranNum(transactionNumber);
@@ -519,10 +519,11 @@ public class CompleteReview {
 	            	checkParticipants();
 	            	tranPurposeEvidence();
 	            	decisionBlock(action);
-	            	afterCaseAdedClickFinalSubmit();
+	            	clickFinalSubmitL1();
 	                System.out.println("Performing action: " + action);
 	                break;
 	            case "block_with_review_no_case_details_l1_l2":
+	            	launchChromePassUrl();
 	            	loginL1();
 	            	searchFilterClickL1();
 	            	searchByTranNum(transactionNumber);
@@ -531,17 +532,18 @@ public class CompleteReview {
 	            	checkParticipants();
 	            	tranPurposeEvidence();
 	            	decisionBlock(action);
-	            	afterCaseAdedClickFinalSubmit();
-	            	launchChromeAgain();
-	            	logoutL1andloginL2();
+	            	clickFinalSubmitL1();
+	            	launchChromePassUrl();
+	            	loginL2();
 	            	searchFilterClickL2();
 	            	searchByTranNum(transactionNumber);
 	            	reviewButtonClicked();
 	            	blockWithReviewL2();
-	            	afterCaseAdedClickFinalSubmit();
+	            	clickFinalSubmitL2(action);
 	                System.out.println("Performing action: " + action);
 	                break;
 	            case "block_with_review_with_case_details_l1_l2":
+	            	launchChromePassUrl();
 	            	loginL1();
 	            	searchFilterClickL1();
 	            	searchByTranNum(transactionNumber);
@@ -552,14 +554,14 @@ public class CompleteReview {
 	            	decisionBlock(action);
 	            	caseDetailsByL1();
 	            	decisionBlock(action);
-	            	afterCaseAdedClickFinalSubmit();
-	            	launchChromeAgain();
-	            	logoutL1andloginL2();
+	            	clickFinalSubmitL1();
+	            	launchChromePassUrl();
+	            	loginL2();
 	            	searchFilterClickL2();
 	            	searchByTranNum(transactionNumber);
 	            	reviewButtonClicked();
 	            	blockWithReviewL2();
-	            	afterCaseAdedClickFinalSubmit();
+	            	clickFinalSubmitL2(action);
 	                System.out.println("Performing action: " + action);
 	                break;
 	            default:
